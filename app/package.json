@@ -1,0 +1,15 @@
+{
+  "name": "aikigo",
+  "version": "1.0.0",
+  "description": "GnuGo GTP Client",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "https://github.com/soerenkoehler",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^4.1.1"
+  }
+}
