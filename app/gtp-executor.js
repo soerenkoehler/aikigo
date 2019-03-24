@@ -1,4 +1,4 @@
-const { spawn } = require('child_process')
+const { spawn } = require('child_process');
 
 var GTP = function () {
     this.data = "";
@@ -7,7 +7,8 @@ var GTP = function () {
 GTP.prototype.execute = function (onExit) {
     this.proc = spawn('cmd.exe', ['/c', 'echo', 'Hello', ' ', 'World']);
     this.proc.on('exit', onExit);
-    this.proc.stdout.on('data', d => this.data += d.toString());
+    this.proc.stdout.on('data', d => console.log(d.toString()));
+    // this.proc.stdout.on('data', d => this.data += d.toString());
 }
 
-module.exports.GTP = GTP
+module.exports.GTP = GTP;
