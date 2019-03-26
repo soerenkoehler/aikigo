@@ -1,0 +1,59 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../lib/material-icons.css">
+    <link rel="stylesheet" href="../lib/bootstrap.min.css">
+    <script src="../lib/jquery-3.3.1.min.js"></script>
+    <script src="../lib/bootstrap.bundle.min.js"></script>
+    <script src="main.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <div class="navbar-brand">
+            <img src="../img/yinyang.svg" width="32" height="32" class="d-inline-block align-top" alt="">
+            Aiki-Go
+        </div>
+        <div class="dropdown">
+            <button data-toggle="dropdown">
+                <i class="material-icons">menu</i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" data-toggle="modal" href="#dialog-preferences">Preferences...</a>
+                <hr />
+                <a class="dropdown-item" href="#" id="menu-quit">Quit</a>
+            </div>
+        </div>
+    </nav>
+    <div class="tab-pane active" id="tab-main">
+        Hello World
+    </div>
+    <div class="modal" id="dialog-preferences">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Preferences</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <i class="material-icons">close</i>
+                    </button>
+                </div>
+                <div class="modal-body container-fluid">
+                    <div class="row">
+                        <div class="col-auto">
+                            <label>GTP Server</label>
+                        </div>
+                        <div class="col">
+                            <input id="dialog-preferences-gtpServer" type="text" class="w-100"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="dialog-preferences-save">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

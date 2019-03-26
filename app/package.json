@@ -2,7 +2,7 @@
   "name": "aikigo",
   "version": "1.0.0",
   "description": "GnuGo GTP Client",
-  "main": "index.js",
+  "main": "core/index.js",
   "scripts": {
     "start": "electron ."
   },
