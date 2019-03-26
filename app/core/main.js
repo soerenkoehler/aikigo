@@ -12,4 +12,13 @@ $(document).ready(() => {
         });
         app.preferences.save();
     });
+    $('#dialog-preferences-gtpServer-select').on('click', () => {
+        app.remote.dialog.showOpenDialog({
+            title: "Select GTP Server executable",
+        }, files => {
+            if (files) {
+                $('#dialog-preferences-gtpServer').val(files[0])
+            }
+        });
+    })
 })
