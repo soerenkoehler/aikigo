@@ -15,7 +15,7 @@
             Aiki-Go
         </div>
         <div class="dropdown">
-            <button data-toggle="dropdown">
+            <button data-toggle="dropdown" class="btn btn-outline-secondary">
                 <i class="material-icons">menu</i>
             </button>
             <div class="dropdown-menu dropdown-menu-right">
@@ -28,7 +28,7 @@
     <div class="tab-pane active" id="tab-main">
         Hello World
     </div>
-    <div class="modal" id="dialog-preferences">
+    <div class="modal" data-backdrop="static" id="dialog-preferences">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -38,13 +38,13 @@
                     </button>
                 </div>
                 <div class="modal-body container-fluid">
-                    <div class="row">
+                    <div class="row align-items-center">
                         <div class="col-auto">
-                            <label>GTP Server</label>
+                            <strong>GTP Server</strong>
                         </div>
                         <div class="col d-flex">
                             <input type="text" class="w-100 mr-1" id="dialog-preferences-gtpServer" />
-                            <button type="button" id="dialog-preferences-gtpServer-select">
+                            <button type="button" class="btn btn-outline-secondary" id="dialog-preferences-gtpServer-select">
                                 <i class="material-icons">folder_open</i>
                             </button>
                         </div>
