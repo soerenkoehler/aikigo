@@ -1,4 +1,10 @@
 $(document).ready(() => {
+    $('#menu-play').on('click', () => {
+        app.gtp.execute(app.preferences.data.gtpServer, (c) => {
+            console.log('Exit', app.gtp.buffer);
+        });
+    });
+
     $('#menu-quit').on('click', () => app.remote.getCurrentWindow().close());
 
     $('#dialog-preferences').on('show.bs.modal', () => {

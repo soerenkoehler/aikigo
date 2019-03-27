@@ -1,5 +1,5 @@
-let { app, BrowserWindow, Menu } = require('electron');
-let { localFile } = require('./util');
+const { app, BrowserWindow, Menu } = require('electron');
+const { localFile } = require('./util');
 
 app.on('ready', () => {
     Menu.setApplicationMenu(null);
@@ -15,7 +15,7 @@ app.on('ready', () => {
             preload: localFile('main-preload.js')
         }
     });
-    // win.webContents.openDevTools();
+    win.webContents.openDevTools();
     win.once('ready-to-show', () => {
         win.show()
     });

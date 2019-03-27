@@ -19,6 +19,8 @@
                 <i class="material-icons">menu</i>
             </button>
             <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="#" id="menu-play">Play</a>
+                <hr />
                 <a class="dropdown-item" data-toggle="modal" href="#dialog-preferences">Preferences...</a>
                 <hr />
                 <a class="dropdown-item" href="#" id="menu-quit">Quit</a>
@@ -26,7 +28,7 @@
         </div>
     </nav>
     <div class="tab-pane active" id="tab-main">
-        Hello World
+        <span id="output"></span>
     </div>
     <div class="modal" data-backdrop="static" id="dialog-preferences">
         <div class="modal-dialog">
