@@ -1,7 +1,40 @@
+let currentState;
+let stateMachine;
+
+function beginState(start, definition) {
+    if (definition) {
+        stateMachine = definition;
+    }
+    currentState = stateMachine[start];
+    currentState.in();
+}
+
+function updateState(response) {
+    currentState.out(response);
+}
+
 $(document).ready(() => {
     $('#menu-play').on('click', () => {
-        app.gtp.execute(app.preferences.data.gtpServer, (c) => {
-            console.log('Exit', app.gtp.buffer);
+        app.gtp.start(app.preferences.data.gtpServer, ['--mode', 'gtp'], updateState);
+        beginState('name', {
+            name: {
+                in: () => app.gtp.send('name'),
+                out: (response) => {
+                    console.log('Name=' + response);
+                    beginState('version');
+                }
+            },
+            version: {
+                in: () => app.gtp.send('version'),
+                out: (response) => {
+                    console.log('Version=' + response);
+                    beginState('quit');
+                }
+            },
+            quit: {
+                in: () => app.gtp.send('quit'),
+                out: (response) => console.log(response)
+            }
         });
     });
 
