@@ -14,8 +14,20 @@ function updateState(response) {
 }
 
 $(document).ready(() => {
+    let prefs = app.preferences.data;
+
+    /*
+     * Menu
+     */
     $('#menu-play').on('click', () => {
-        app.gtp.start(app.preferences.data.gtpServer, ['--mode', 'gtp'], updateState);
+        app.gtp.start(
+            prefs.gtpServer,
+            prefs.gtpOptions.replace(/\s\s+/g, ' ').split(' '),
+            updateState);
+        let waitForGTP = setTimeout(() => {
+            app.gtp.proc.kill();
+            $('#dialog-gtp-error').modal('show');
+        }, 2000);
         beginState('name', {
             name: {
                 in: () => app.gtp.send('name'),
@@ -33,21 +45,27 @@ $(document).ready(() => {
             },
             quit: {
                 in: () => app.gtp.send('quit'),
-                out: (response) => console.log(response)
+                out: (response) => {
+                    clearTimeout(waitForGTP);
+                    console.log(response);
+                }
             }
         });
     });
 
     $('#menu-quit').on('click', () => app.remote.getCurrentWindow().close());
 
+    /*
+     * Preferences dialog
+     */
     $('#dialog-preferences').on('show.bs.modal', () => {
-        Object.entries(app.preferences.data).forEach(([k, v]) => {
+        Object.entries(prefs).forEach(([k, v]) => {
             $('#dialog-preferences-' + k).val(v);
         });
     });
     $('#dialog-preferences-save').on('click', () => {
-        Object.keys(app.preferences.data).forEach(k => {
-            app.preferences.data[k] = $('#dialog-preferences-' + k).val();
+        Object.keys(prefs).forEach(k => {
+            prefs[k] = $('#dialog-preferences-' + k).val();
         });
         app.preferences.save();
     });

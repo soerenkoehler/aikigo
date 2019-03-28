@@ -28,9 +28,6 @@
             </div>
         </div>
     </nav>
-    <div class="tab-pane active" id="tab-main">
-        <span id="output"></span>
-    </div>
     <div class="modal" data-backdrop="static" id="dialog-preferences">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -61,6 +58,24 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal" id="dialog-preferences-save">Save
                         changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" data-backdrop="static" id="dialog-gtp-error">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Error</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <i class="material-icons">close</i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Invalid response from GTP Server.</p>
+                </div>
+                <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
