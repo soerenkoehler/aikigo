@@ -6,13 +6,13 @@ var GTP = function () {
 }
 
 GTP.prototype.start = function (executable, params, onResponse) {
-    console.log(executable,params);
+    console.log(executable, params);
     this.buffer = "";
     this.proc = spawn(executable, params);
     this.proc.stdout.on('data', d => {
         this.buffer += d.toString();
         if (this.buffer.indexOf(separator) > 0) {
-            onResponse(this.buffer.substr(1).trim());
+            onResponse(this.buffer.substr(this.buffer.startsWith('=') ? 1 : 0).trim());
             this.buffer = "";
         }
     });

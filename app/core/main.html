@@ -54,28 +54,18 @@
                     <div class="d-flex">
                         <input type="text" class="w-100" id="dialog-preferences-gtpOptions" />
                     </div>
+                    <div class="preferences-full-line " id="dialog-preferences-gtp-error">
+                        <div class="alert alert-danger d-flex align-items-center">
+                            <i class="material-icons">error_outline</i>
+                            <span class="ml-1">Invalid response from GTP server:</span>
+                            <span class="ml-1" id="dialog-preferences-gtp-error-text"></span>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="dialog-preferences-save">Save
-                        changes</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal" data-backdrop="static" id="dialog-gtp-error">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Error</h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <i class="material-icons">close</i>
+                    <button type="button" class="btn btn-primary" id="dialog-preferences-save">
+                        Save changes
                     </button>
-                </div>
-                <div class="modal-body">
-                    <p>Invalid response from GTP Server.</p>
-                </div>
-                <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 </div>
             </div>

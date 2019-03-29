@@ -4,3 +4,7 @@
     align-items: center;
     gap: 4px 2px;
 }
+
+.preferences-full-line {
+    grid-column: 1 / span 2;
+}
