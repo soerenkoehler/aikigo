@@ -1,9 +1,12 @@
-const { localFile } = require('./util');
-const { Preferences } = require(localFile('preferences'));
-const { GTP } = require(localFile('gtp-executor'));
-
-app = {
-    gtp: new GTP(),
-    preferences: new Preferences(),
+util = {
+    fs: require('fs'),
+    localFile: require('./util').localFile,
+    userFile: require('./util').userFile,
     remote: require('electron').remote
+}
+
+factory = {
+    gtp: require(util.localFile('gtp')),
+    statemachine: require(util.localFile('statemachine')),
+    preferences: require(util.localFile('preferences'))
 }

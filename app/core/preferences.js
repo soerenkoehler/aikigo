@@ -1,18 +1,15 @@
-const { localFile, userFile } = require('./util');
-const fs = require('fs');
-
-const preferencesFile = userFile('.aikigo.json');
-const preferencesDefaultFile = localFile('preferences-default.json');
+const preferencesFile = util.userFile('.aikigo.json');
+const preferencesDefaultFile = util.localFile('preferences-default.json');
 
 let Preferences = function () {
-    this.default = JSON.parse(fs.readFileSync(preferencesDefaultFile));
+    this.default = JSON.parse(util.fs.readFileSync(preferencesDefaultFile));
     this.reload();
 }
 
 Preferences.prototype.reload = function () {
     let saveNew = false;
     try {
-        this.data = JSON.parse(fs.readFileSync(preferencesFile));
+        this.data = JSON.parse(util.fs.readFileSync(preferencesFile));
     }
     catch (error) {
         // ignore errors
@@ -29,7 +26,7 @@ Preferences.prototype.reload = function () {
 }
 
 Preferences.prototype.save = function () {
-    fs.writeFileSync(preferencesFile, JSON.stringify(this.data, null, 4));
+    util.fs.writeFileSync(preferencesFile, JSON.stringify(this.data, null, 4));
 }
 
-module.exports.Preferences = Preferences;
+module.exports = Preferences;
