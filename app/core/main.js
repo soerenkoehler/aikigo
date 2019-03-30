@@ -1,6 +1,12 @@
 $(document).ready(() => {
     let prefs = new factory.preferences();
 
+    new factory.gtpServerValidator(
+        prefs.data.gtpServer,
+        prefs.data.gtpOptions,
+        (validator) => updateNavbarInfo(validator)
+    ).validate()
+
     /*
      * Menu
      */
@@ -24,7 +30,17 @@ $(document).ready(() => {
         Object.keys(prefs.data).forEach(k => {
             prefs.data[k] = $('#dialog-preferences-' + k).val();
         });
-        validatePreferences(prefs.data);
+        new factory.gtpServerValidator(
+            prefs.data.gtpServer,
+            prefs.data.gtpOptions,
+            (validator) => {
+                if (validator.valid) {
+                    prefs.save();
+                    updateNavbarInfo(validator);
+                }
+                updatePreferencesDialog(validator);
+            }
+        ).validate()
     });
     $('#dialog-preferences-gtpServer-select').on('click', () => {
         util.remote.dialog.showOpenDialog({
@@ -36,3 +52,22 @@ $(document).ready(() => {
         });
     })
 });
+
+function updateNavbarInfo(validator) {
+    if (validator.valid) {
+        $('#navbar-info-gtp-server').text(validator.name + ' ' + validator.version);
+    } else {
+        $('#navbar-info-gtp-server').text('none');
+    }
+}
+
+function updatePreferencesDialog(validator, prefs) {
+    if (validator.valid) {
+        $('#dialog-preferences').modal('hide');
+    } else {
+        $('#dialog-preferences-gtp-error-text').text(validator.name + ' ' + validator.version);
+        $('#dialog-preferences-gtp-error').removeClass('d-none');
+        $('#dialog-preferences-save').attr('disabled', false);
+    }
+}
+

@@ -6,7 +6,6 @@ var GTP = function () {
 }
 
 GTP.prototype.start = function (executable, params, onResponse) {
-    console.log(executable, params);
     this.buffer = "";
     this.proc = spawn(executable, params);
     this.proc.stdout.on('data', d => {
@@ -16,11 +15,10 @@ GTP.prototype.start = function (executable, params, onResponse) {
             this.buffer = "";
         }
     });
-    console.log(this.proc);
 }
 
 GTP.prototype.send = function (command) {
     this.proc.stdin.write(command + '\n');
 }
 
-module.exports.GTP = GTP;
+module.exports = GTP;

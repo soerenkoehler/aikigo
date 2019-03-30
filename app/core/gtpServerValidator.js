@@ -1,55 +1,54 @@
 
-let GtpServerValidator = function () {
-    this.gtp = new factory.gtp()
-}
-
-GtpServerValidator.prototype.validate = function (gtpServer, gtpOptions, callback) {
-    this.valid = false
-    this.name = "";
-    this.version = "";
-    this.statemachine = new factory.statemachine({
+let GtpServerValidator = function (gtpServer, gtpOptions, callback) {
+    this.machine = new factory.statemachine({
         init: {
-            in: (machine) => this.gtp.start(gtpServer, gtpOptions.replace(/\s\s+/g, ' ').split(' '), machine.end),
-            out: (machine) => machine.begin('name')
+            in: (machine) => {
+                machine.valid = false
+                machine.name = "";
+                machine.version = "";
+                machine.gtp = new factory.gtp()
+                machine.gtp.start(gtpServer, gtpOptions.replace(/\s\s+/g, ' ').split(' '), machine.end.bind(machine));
+                machine.goto('name');
+            },
+            out: () => { }
         },
         name: {
-            in: () => {
-                this.gtpTimeout = setTimeout(() => beginState('invalid'), 2000);
-                this.gtp.send('name')
+            in: (machine) => {
+                machine.gtpTimeout = setTimeout(() => machine.goto('invalid'), 2000);
+                machine.gtp.send('name')
             },
             out: (machine, data) => {
-                this.name = data;
-                machine.begin(data == 'GNU Go' ? 'version' : 'invalid');
+                machine.name = data;
+                machine.goto(data == 'GNU Go' ? 'version' : 'invalid');
             }
         },
         version: {
-            in: () => this.gtp.send('version'),
+            in: (machine) => machine.gtp.send('version'),
             out: (machine, data) => {
-                this.version = data;
-                machine.begin(data == '3.8' ? 'valid' : 'invalid');
+                machine.version = data;
+                machine.goto(data == '3.8' ? 'valid' : 'invalid');
             }
         },
         valid: {
-            in: () => this.gtp.send('quit'),
-            out: () => {
-                clearTimeout(this.gtpTimeout);
-                this.preferences.save();
-                this.valid = true
-                callback(this);
-                // $('#dialog-preferences').modal('hide');
+            in: (machine) => machine.gtp.send('quit'),
+            out: (machine) => {
+                clearTimeout(machine.gtpTimeout);
+                machine.valid = true
+                callback(machine);
             }
         },
         invalid: {
-            in: () => {
-                this.gtp.proc.kill();
-                callback(this);
-                // $('#dialog-preferences-gtp-error-text').text(gtpResponse);
-                // $('#dialog-preferences-gtp-error').removeClass('d-none');
-                // $('#dialog-preferences-save').attr('disabled', false);
+            in: (machine) => {
+                machine.gtp.proc.kill();
+                callback(machine);
             },
             out: () => { }
         }
     });
+}
+
+GtpServerValidator.prototype.validate = function () {
+    this.machine.goto('init');
 }
 
 module.exports = GtpServerValidator

@@ -1,5 +1,4 @@
 {
     "gtpServer": "gnugo",
-    "gtpOptions": "--mode gtp",
-    "other": "otherValue"
+    "gtpOptions": "--mode gtp"
 }

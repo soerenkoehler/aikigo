@@ -3,8 +3,8 @@ let StateMachine = function (definition) {
     this.currentState = null;
 }
 
-StateMachine.prototype.goto = function (start) {
-    this.currentState = this.definition[start];
+StateMachine.prototype.goto = function (state) {
+    this.currentState = this.definition[state];
     this.currentState.in(this);
 }
 

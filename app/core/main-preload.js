@@ -7,6 +7,7 @@ util = {
 
 factory = {
     gtp: require(util.localFile('gtp')),
+    gtpServerValidator: require(util.localFile('gtpServerValidator')),
     statemachine: require(util.localFile('statemachine')),
     preferences: require(util.localFile('preferences'))
 }
