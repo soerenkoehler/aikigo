@@ -1,11 +1,13 @@
-$(document).ready(() => {
-    let prefs = new factory.preferences();
 
-    new factory.gtpServerValidator(
+let prefs = new factory.preferences();
+let gtpServer = null;
+
+$(document).ready(() => {
+    new factory.gtp.validateGtpServer(
         prefs.data.gtpServer,
         prefs.data.gtpOptions,
-        (validator) => updateNavbarInfo(validator)
-    ).validate()
+        (validator) => updateSelectedServer(validator.server)
+    );
 
     /*
      * Menu
@@ -30,17 +32,17 @@ $(document).ready(() => {
         Object.keys(prefs.data).forEach(k => {
             prefs.data[k] = $('#dialog-preferences-' + k).val();
         });
-        new factory.gtpServerValidator(
+        new factory.gtp.validateGtpServer(
             prefs.data.gtpServer,
             prefs.data.gtpOptions,
             (validator) => {
-                if (validator.valid) {
+                if (validator.server) {
                     prefs.save();
-                    updateNavbarInfo(validator);
+                    updateSelectedServer(validator.server);
                 }
                 updatePreferencesDialog(validator);
             }
-        ).validate()
+        );
     });
     $('#dialog-preferences-gtpServer-select').on('click', () => {
         util.remote.dialog.showOpenDialog({
@@ -53,16 +55,17 @@ $(document).ready(() => {
     })
 });
 
-function updateNavbarInfo(validator) {
-    if (validator.valid) {
-        $('#navbar-info-gtp-server').text(validator.name + ' ' + validator.version);
+function updateSelectedServer(server) {
+    gtpServer = server;
+    if (server) {
+        $('#navbar-info-gtp-server').text(server.title);
     } else {
         $('#navbar-info-gtp-server').text('none');
     }
 }
 
-function updatePreferencesDialog(validator, prefs) {
-    if (validator.valid) {
+function updatePreferencesDialog(validator) {
+    if (validator.server) {
         $('#dialog-preferences').modal('hide');
     } else {
         $('#dialog-preferences-gtp-error-text').text(validator.name + ' ' + validator.version);
@@ -70,4 +73,3 @@ function updatePreferencesDialog(validator, prefs) {
         $('#dialog-preferences-save').attr('disabled', false);
     }
 }
-
