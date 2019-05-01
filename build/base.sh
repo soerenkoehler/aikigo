@@ -1,6 +1,5 @@
 #!/bin/sh
 
-PLATFORM=$1
 if [ -z "$PLATFORM" ]; then
     PLATFORM=win32
 fi
